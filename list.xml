@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modeldirectory name="PASTA MODELO" absolutePath="G:\desenvolvimento\DOCUMENTOS\- PASTAS MODELO -\"/>
+<rootdirectory name="Desenvolvimento" Path="G:\desenvolvimento\PROJETOS\">
+
+	<directory name="Desenhos">
+		<directory name="DXF"/>
+		<directory name="PDF"/>
+		<directory name="SOLIDWORKS"/>
+	</directory>
+	
+	<directory name="Documentos">
+		<directory name="Adjudicação"/>			
+		<directory name="Desenhos do Cliente"/>
+		<directory name="Emails">
+			<directory name="nEnc"/>
+		</directory>
+		<directory name="Folhas de Rosto">
+			<file name="nProj-FOLHA DE ROSTO" Path="modelo pasta_Desenvolvimento\Documentos\Folhas de Rosto\FOLHA DE ROSTO.xlsx"/>
+			<file name="nProj-FOLHA ROSTO DOCUMENTAÇÃO-nEnc" absolutePath="modelo pasta_Desenvolvimento\Documentos\Folhas de Rosto\FOLHA ROSTO DOCUMENTAÇÃO PROJETOS.xlsm"/>
+		</directory>
+		<directory name="Fotografias Projeto">
+			<directory name="nEnc"/>
+		</directory>
+		<directory name="Qualidade">
+			<directory name="nEnc">
+				<file name="nProj-DOCUMENTOS_QUALIDADE-nEnc" Path="modelo pasta_Desenvolvimento\Documentos\Qualidade\DOCUMENTOS_QUALIDADE.xlsm"/>
+				<file name="nProj-Levantamento_necessidades_I&amp;D-nEnc" Path="modelo pasta_Desenvolvimento\Documentos\Qualidade\VRT.ID.Mod.009.00_Levantamento_necessidades_I&amp;D.xlsx"/>
+			</directory>
+		</directory>
+		<file name="nProj-CHECKLIST-nEnc" Path="modelo pasta_Desenvolvimento\Documentos\CHECKLIST MODELO.xlsm"/>
+	</directory>		
+</rootdirectory>
+
+<rootdirectory name="Produção" Path="G:\producao\prodAno\Clientes\">
+	<directory name="3D">
+		<directory name="OBSOLETO"/>
+	</directory>
+	<directory name="ARTIGOS"/>	
+	<directory name="DOCUMENTOS"/>
+	<directory name="DXF">
+		<directory name="OBSOLETO"/>
+	</directory>
+	<directory name="PDF">
+		<directory name="OBSOLETO"/>
+	</directory>
+</rootdirectory>
