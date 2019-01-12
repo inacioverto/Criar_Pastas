@@ -1,5 +1,5 @@
 ﻿Imports System.Xml
-Imports Excel = Microsoft.Office.Interop.Excel
+'Imports Excel = Microsoft.Office.Interop.Excel
 
 Module VARS
 
@@ -17,5 +17,4 @@ Module VARS
 
     Public Const folderTreeXMLproj As String = "G:\informatica\Software\CRIAR PASTAS ID\Application Files\CONFIG\folderTreeProj.xml"
     Public Const folderTreeXMLap As String = "G:\informatica\Software\CRIAR PASTAS ID\Application Files\CONFIG\folderTreeAP.xml"
-    Public Const SybusDB As String = "Data Source=srv02;Database=SGN_VRT_PRD;User ID=sa;Password=Verto2017!"
 End Module
