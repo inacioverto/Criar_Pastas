@@ -10,6 +10,8 @@ Public Class FormMain
         Dim x As Integer = ComboBox_n_projeto.Width - 20
         Dim y As Integer = 10
 
+        ComboBox_n_projeto.Text = UCase(ComboBox_n_projeto.Text)
+
         nProj = ComboBox_n_projeto.Text
 
         If nProj <> Nothing Then
@@ -38,7 +40,7 @@ Public Class FormMain
             ComboBox_n_projeto.ForeColor = Color.Black
         End If
 
-        If nClienteOK And nProjOK And nEncOK Then
+        If nClienteOK And nProjOK And nEncOK And nomeClienteOK Then
             GroupBox1.Enabled = True
             TextboxPastasFill()
             If desProjOK Then
@@ -61,7 +63,7 @@ Public Class FormMain
 
         If TextBox_n_enc.Text = Nothing Then
             nEncOK = False
-        ElseIf checkNenc(TextBox_n_enc.Text, CheckBoxProdutoVerto.checked) Then
+        ElseIf checkNenc(TextBox_n_enc.Text, CheckBoxProdutoVerto.Checked) Then
 
             TextBox_n_enc.ForeColor = Color.Crimson
             ToolTipNenc.Active = True
@@ -158,10 +160,10 @@ Public Class FormMain
         MsgBox("Criação de pastas terminada.")
         Button_criar.Enabled = False
     End Sub
+	
 
-
-    Private Sub TextBox_n_cliente_TextChanged(sender As Object, e As EventArgs) Handles TextBox_n_cliente.TextChanged
-        TextBox_n_cliente.Text = OnlyNumbers(TextBox_n_cliente.Text)
+	Private Sub TextBox_n_cliente_TextChanged(sender As Object, e As EventArgs) Handles TextBox_n_cliente.TextChanged
+        If Not SEMnCliente Then TextBox_n_cliente.Text = OnlyNumbers(TextBox_n_cliente.Text)
         previewClean()
         If TextBox_n_cliente.Text <> "" Then
             CBnProjFill(ComboBox_n_projeto, TextBox_n_cliente.Text)
@@ -170,14 +172,18 @@ Public Class FormMain
             ComboBox_n_projeto.Text = ""
         End If
     End Sub
-
+	
 
     Private Sub ComboBox_n_projeto_TextChanged(sender As Object, e As EventArgs) Handles ComboBox_n_projeto.TextChanged
-        ComboBox_n_projeto.Text = check_double(ComboBox_n_projeto.Text)
+        If TipoPasta = 0 Then ComboBox_n_projeto.Text = check_double(ComboBox_n_projeto.Text)
         TextBox_desig_proj.Text = ""
         TextBox_desig_proj.Enabled = True
+        If Not TextBox_nome_cliente.Enabled Then TextBox_nome_cliente.Text = ""
+        TextBox_nome_cliente.Enabled = True
         previewClean()
-        If ComboBox_n_projeto.Text.Length = 7 Then ComboBox_n_projeto_Leave(sender, e)
+        If (ComboBox_n_projeto.Text.Length = 7 And TipoPasta = 0) Or (ComboBox_n_projeto.Text.Length = 10 And TipoPasta = 1) Then
+            ComboBox_n_projeto_Leave(sender, e)
+        End If
     End Sub
 
 
@@ -234,7 +240,11 @@ Public Class FormMain
 
 
     Private Sub ComboBox_n_projeto_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox_n_projeto.KeyPress
-        e.Handled = Not (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = 8)
+        If TipoPasta = 0 Then
+            e.Handled = Not (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = 8)
+        Else
+            e.Handled = Not (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = 8 Or Char.IsLetter(e.KeyChar))
+        End If
     End Sub
 
 
@@ -272,8 +282,11 @@ Public Class FormMain
 
 
     Private Sub ButtonPreview_Click(sender As Object, e As EventArgs) Handles ButtonPreview.Click
-        TextBox_nome_cliente.Text = NomeClienteSybus(TextBox_n_cliente.Text)
+
+        If Not CheckBoxSnmrCliente.Checked Then TextBox_nome_cliente.Text = NomeClienteSybus(TextBox_n_cliente.Text)
+
         nomeCliente = TextBox_nome_cliente.Text
+
         TreeView1.Nodes.Clear()
         Dim folderPath As String
         Dim tNode As TreeNode = Nothing
@@ -309,7 +322,16 @@ Public Class FormMain
         Next
 
         TreeView1.ExpandAll()
-        If ComboBoxRespProj.Text = "" Then MsgBox("O campo Responsável do Projeto não está preenchido.")
+
+        If ComboBoxRespProj.Text = "" Then
+            Dim txt As String
+            If TipoPasta = 0 Then
+                txt = "O campo Responsável do Projeto não está preenchido."
+            Else
+                txt = "O campo Orçamentista não está preenchido."
+            End If
+            MsgBox(txt)
+        End If
         Button_criar.Enabled = True
     End Sub
 
@@ -358,8 +380,12 @@ Public Class FormMain
     End Sub
 
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Hide()
+        Splash.Show()
 
+        SEMnCliente = False
+        nomeClienteOK = True
 
         If (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) Then
             With System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion
@@ -369,9 +395,17 @@ Public Class FormMain
 
         Dim NodeName As String
         Try
-            document.Load(folderTreeXML)
+            If TipoPasta = 0 Then
+                document.Load(folderTreeXMLproj)
+            Else
+                document.Load(folderTreeXMLap)
+            End If
         Catch
-            document.Load("d:\Inacio\Documents\Seafile\VERTO\PROGRAMACAO\Criar_Pastas\IGNORE\folderTree_I.xml")
+            If TipoPasta = 0 Then
+                document.Load("e:\Users\Inacio\Documents\Seafile\VERTO\PROGRAMACAO\Criar_Pastas\IGNORE\folderTree_I.xml")
+            Else
+                document.Load("e:\Users\Inacio\Documents\Seafile\VERTO\PROGRAMACAO\Criar_Pastas\IGNORE\folderTreeAP_I.xml")
+            End If
             MsgBox("O ficheiro xml com a árvore de pastas não foi encontrado.", MsgBoxStyle.MsgBoxSetForeground)
             'End
         End Try
@@ -385,6 +419,10 @@ Public Class FormMain
         For Each chNode As XmlNode In node.ChildNodes
             Projetistas(y) = chNode.Attributes("name").Value
             y += 1
+        Next
+
+        For y = 0 To Projetistas.GetUpperBound(0)
+            ComboBoxRespProj.Items.Add(Projetistas(y))
         Next
 
         For Each node In document.SelectNodes("modeldirectory/rootdirectory")
@@ -401,11 +439,31 @@ Public Class FormMain
             End If
         Next
 
-        For y = 0 To Projetistas.GetUpperBound(0)
-            ComboBoxRespProj.Items.Add(Projetistas(y))
-        Next
+        If TipoPasta = 0 Then
+            getAllFoldersPROJ(PastaID, ProjectFolders)
+        Else
+            getAllFoldersAP(PastaID, ProjectFolders)
+            Me.Text = "Criar Pasta de Análise de Projeto"
+            CheckBoxProdutoVerto.Visible = False
+            LabelNenc.Visible = False
+            TextBox_n_enc.Visible = False
+            LabelResp.Text = "Orçamentista:"
+            ComboBoxRespProj.Location = New Point(80, 117)
+            LabelResp.Location = New Point(5, 121)
+            TextBoxRespBorder.Location = New Point(79, 116)
+            LabelPastaProd.Visible = False
+            TextBoxPastaProd.Visible = False
+            LabelPastaDesenv.Location = New Point(9, 36)
+            TextBoxPastaID.Location = New Point(72, 32)
+            LabelNproj.Text = "Nº A.P.:"
+            LabelNproj.Location = New Point(34, 51)
+            nEncOK = True
+            TextBox_nome_cliente.Visible = True
+            CheckBoxSnmrCliente.Visible = True
+        End If
 
-        getAllFolders(PastaID, ProjectFolders)
+        Splash.Close()
+        Me.Show()
     End Sub
 
     Private Sub CheckBoxProdutoVerto_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxProdutoVerto.CheckedChanged
@@ -418,5 +476,58 @@ Public Class FormMain
             TextBox_n_enc.Width = 65
             If TextBox_n_enc.Text.Length > 8 Then TextBox_n_enc.Text = Strings.Left(TextBox_n_enc.Text, 8)
         End If
+    End Sub
+
+    Private Sub FormMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Application.Exit()
+    End Sub
+
+    Private Sub CheckBoxSnmrCliente_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxSnmrCliente.CheckedChanged
+        If CheckBoxSnmrCliente.Checked Then
+            TextBox_n_cliente.Enabled = False
+            SEMnCliente = True
+            TextBox_n_cliente.Text = "XXXX"
+            CBnomeClienteFill(ComboBox_nome_cliente)
+            ComboBox_nome_cliente.visible = True
+            nClienteOK = True
+            TextBox_n_cliente_Leave(sender, e)
+        Else
+            TextBox_n_cliente.Enabled = True
+            SEMnCliente = False
+            TextBox_n_cliente.Text = ""
+            TextBox_nome_cliente.Text = ""
+            Combobox_nome_cliente.visible = False
+            TextBox_nome_cliente.Enabled = False
+        End If
+    End Sub
+
+    Private Sub TextBox_nome_cliente_TextChanged(sender As Object, e As EventArgs) Handles TextBox_nome_cliente.TextChanged
+        previewClean()
+        Dim x As Integer = TextBox_nome_cliente.Width - 20
+        Dim y As Integer = 40
+        Dim erro As String = ""
+
+        nomeCliente = UCase(TextBox_nome_cliente.Text)
+            nomeClienteOK = False
+
+        If nomeCliente <> "" And TextBox_nome_cliente.Enabled = True Then
+            nomeClienteOK = True
+
+            If checkNomeCliente(nomeCliente, erro) Then
+                TextBox_nome_cliente.ForeColor = Color.Crimson
+                ToolTipDesigProj.Active = True
+                ToolTipDesigProj.Show(erro, TextBox_nome_cliente, x, y)
+                nomeClienteOK = False
+            Else
+                TextBox_nome_cliente.ForeColor = Color.Black
+                ToolTipDesigProj.Active = False
+                ToolTipDesigProj.Hide(TextBox_nome_cliente)
+                'desProjOK = True
+            End If
+        End If
+    End Sub
+
+    Private Sub ComboBox_nome_cliente_TextChanged(sender As Object, e As EventArgs) Handles ComboBox_nome_cliente.TextChanged
+        If CheckBoxSnmrCliente.Checked Then TextBox_nome_cliente.Text = ComboBox_nome_cliente.Text
     End Sub
 End Class

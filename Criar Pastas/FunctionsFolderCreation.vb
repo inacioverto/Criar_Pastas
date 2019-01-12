@@ -4,7 +4,7 @@ Imports System.Xml
 Imports System.IO
 Imports Excel = Microsoft.Office.Interop.Excel
 
-Module FolderCreationFunctions
+Module FunctionsFolderCreation
 
     Dim exlApp As Excel.Application
     Dim newExlApp As Integer = True
@@ -48,12 +48,29 @@ Module FolderCreationFunctions
     Sub CreateSubDirectories(ByVal currentPath As String, ByVal nodes As XmlNodeList)
         For Each node As XmlNode In nodes
             If node.Name = "directory" Then
+                Dim CXXX As Boolean
+                Try
+                    CXXX = node.Attributes("CXXXX").Value
+                Catch 'ex As Exception
+                    CXXX = False
+                End Try
+
+                If CXXX Then
+                    currentPath = currentPath & nomeCliente & "\"
+
+                    If My.Computer.FileSystem.GetDirectoryInfo(currentPath).Exists = False Then
+                        Directory.CreateDirectory(currentPath)
+                        'Debug.Print(currentPath)
+                    End If
+                End If
+
                 Dim directoryName As String = node.Attributes("name").Value
                 Dim fullPath As String = currentPath + directoryName + "\"
                 replaceVars(fullPath)
 
                 If My.Computer.FileSystem.GetDirectoryInfo(fullPath).Exists = False Then
                     Directory.CreateDirectory(fullPath)
+                    'Debug.Print(fullPath)
                 End If
 
                 If node.HasChildNodes Then

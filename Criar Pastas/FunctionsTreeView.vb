@@ -3,7 +3,7 @@
 Imports System.Xml
 Imports System.IO
 
-Module TreeViewFunctions
+Module FunctionsTreeView
 
 
     Sub CreateSubDirectoriesTreeview(ByVal PARENTpath As String, ByVal xNodes As XmlNodeList, ByVal TparentNode As TreeNode, ByVal produtoVerto As Boolean)
@@ -11,12 +11,32 @@ Module TreeViewFunctions
 
         For Each xNode As XmlNode In xNodes
             If xNode.Name = "directory" Then
+                Dim CXXX As Boolean
+                Try
+                    CXXX = xNode.Attributes("CXXXX").Value
+                Catch 'ex As Exception
+                    CXXX = False
+                End Try
+
+                Dim tNode As TreeNode
+
+                If CXXX Then
+                    PARENTpath = PARENTpath & nomeCliente & "\"
+
+                    tNode = New TreeNode(nomeCliente)
+
+                    If CreateNodeTreeview(PARENTpath, xNode.ChildNodes) Then
+                        TparentNode.Nodes.Add(tNode)
+                    End If
+                    TparentNode = tNode
+                End If
+
                 Dim name As String = xNode.Attributes("name").Value
+
                 replaceVars(name)
 
                 Dim fullPath As String = PARENTpath & name
 
-                Dim tNode As TreeNode
                 tNode = New TreeNode(name)
 
                 If CreateNodeTreeview(fullPath, xNode.ChildNodes) Then

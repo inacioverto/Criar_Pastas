@@ -22,6 +22,7 @@ Partial Class DocumentSelector
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DocumentSelector))
         Me.ListViewDocuments = New System.Windows.Forms.ListView()
         Me.ButtonOkDocuments = New System.Windows.Forms.Button()
         Me.SuspendLayout()
@@ -58,6 +59,7 @@ Partial Class DocumentSelector
         Me.ControlBox = False
         Me.Controls.Add(Me.ButtonOkDocuments)
         Me.Controls.Add(Me.ListViewDocuments)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "DocumentSelector"
         Me.Text = "Selecionar Documentos"
         Me.TopMost = True
