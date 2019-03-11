@@ -167,7 +167,7 @@ Public Class FormMain
             TreeView1.Nodes.Add(tNode)
 
             If xNode.HasChildNodes Then
-                getFiles(folderPath, xNode.ChildNodes)
+                'getFiles(folderPath, xNode.ChildNodes)
                 'DocumentSelector.ShowDialog()
                 CreateSubDirectoriesTreeview(folderPath, xNode.ChildNodes, tNode, CheckBoxProdutoVerto.Checked)
             End If
