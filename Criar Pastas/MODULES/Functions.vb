@@ -7,25 +7,77 @@ Imports System.Data.SqlClient
 
 Module Functions
 
+    Function baseFoldersReading(ByVal nodes As XmlNodeList, ByVal folderType As Integer) As XmlNode
+        baseFoldersReading = Nothing
+        Dim node As XmlNode = Nothing
+        For Each node In nodes 'document.SelectNodes("modeldirectory/rootdirectory")
+            If node.Name = "modeldirectory" Then
+                Dim nodeType As String = node.Attributes("type").Value
+
+                Select Case folderType
+                    Case 0
+                        If UCase(nodeType) = "PROJETO" Then
+                            Exit For
+                        End If
+                    Case 1
+                        If UCase(nodeType) = "AP" Then
+                            Exit For
+                        End If
+                End Select
+            End If
+        Next
+
+        If node IsNot Nothing Then
+            Dim NodeName As String
+            baseFoldersReading = node
+            PastaModelo = node.Attributes("path").Value
+
+            Dim childnode As XmlNode
+
+            For Each childnode In node.ChildNodes
+                If childnode.Name = "rootdirectory" Then
+                    NodeName = UCase(childnode.Attributes("name").Value)
+                    If NodeName = "DESENVOLVIMENTO" Then
+                        PastaID = childnode.Attributes("path").Value
+                        PastaID = Strings.Left(PastaID, InStrRev(PastaID, "\"))
+                        If PastaID <> "" And Strings.Right(PastaID, 1) <> "\" Then PastaID = PastaID & "\"
+                    End If
+
+                    If NodeName = "PRODUÇÃO" Then
+                        PastaProd = childnode.Attributes("path").Value
+                        If PastaProd <> "" And Strings.Right(PastaProd, 1) <> "\" Then PastaProd = PastaProd & "\"
+                    End If
+                End If
+            Next
+        Else
+            MsgBox("Erro no ficheiro xml: secççao 'modeldirectory' não encontrada.", MsgBoxStyle.MsgBoxSetForeground)
+            End
+        End If
+    End Function
+
+
     Function NomeClienteSybus(ByVal nmrcliente As Integer) As String
-        Dim con As SqlConnection
-        Dim cmd As SqlCommand
-        Dim Sdr As SqlDataReader
-        Dim dt As DataTable = New DataTable
-        con = New SqlConnection(SybusDB)
+        NomeClienteSybus = "TESTE"
+        If Not debug Then
+            Dim con As SqlConnection
+            Dim cmd As SqlCommand
+            Dim Sdr As SqlDataReader
+            Dim dt As DataTable = New DataTable
+            con = New SqlConnection(SybusDB)
 
-        NomeClienteSybus = ""
+            NomeClienteSybus = ""
 
-        Try
-            con.Open()
-            cmd = New SqlCommand("select nome1 from clientes where num_cliente ='" + nmrcliente.ToString + "'", con)
-            Sdr = cmd.ExecuteReader
-            dt.Load(Sdr)
-            NomeClienteSybus = dt.Rows(0)("nome1").ToString()
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-        con.Close()
+            Try
+                con.Open()
+                cmd = New SqlCommand("select nome1 from clientes where num_cliente ='" + nmrcliente.ToString + "'", con)
+                Sdr = cmd.ExecuteReader
+                dt.Load(Sdr)
+                NomeClienteSybus = dt.Rows(0)("nome1").ToString()
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            End Try
+            con.Close()
+        End If
     End Function
 
 
@@ -43,6 +95,7 @@ Module Functions
             Dim ClientesDirArr() As DirectoryInfo = DesenvDir.GetDirectories() 'Array to store paths
 
             For Each ClientesDir In ClientesDirArr
+                Application.DoEvents()
                 Dim ProjetosDirArr As DirectoryInfo() = ClientesDir.GetDirectories() 'Array to store paths
 
                 For Each ProjetosDir In ProjetosDirArr
@@ -120,6 +173,7 @@ Module Functions
             Dim ClientesDirArr() As DirectoryInfo = DesenvDir.GetDirectories() 'Array to store paths
 
             For Each ClientesDir In ClientesDirArr
+                Application.DoEvents()
                 Dim DirCliente, nomeCliente As String
 
                 DirCliente = ClientesDir.Name
@@ -162,6 +216,7 @@ Module Functions
         End If
     End Sub
 
+
     Sub addTableAP(ByVal ProjetosDirArr As DirectoryInfo(), ByVal nmrCliente As String, ByVal nomeCliente As String, ByRef table As DataTable, ByRef folderCount As Integer)
         For Each ProjetosDir In ProjetosDirArr
             Dim DirProjeto As String
@@ -183,84 +238,84 @@ Module Functions
     End Sub
 
 
-    Sub getAllFoldersOld(ByVal directory As String, ByRef pathArray(,) As String)
-        Dim diFather As New IO.DirectoryInfo(directory) 'Create object
-        Dim diFatherArr() As DirectoryInfo 'Array to store paths
-        Dim driFather As DirectoryInfo
-        Dim Pfolder, Cfolder As String
-        Dim files() As String
-        Dim ShortcutPath As String = ""
-        Dim ShortcutTarget As String = ""
-        Dim folderCount As Integer = 0
-        Dim i As Integer = 0
-        Dim separatorPOS As Integer = 0
+    'Sub getAllFoldersOld(ByVal directory As String, ByRef pathArray(,) As String)
+    '    Dim diFather As New IO.DirectoryInfo(directory) 'Create object
+    '    Dim diFatherArr() As DirectoryInfo 'Array to store paths
+    '    Dim driFather As DirectoryInfo
+    '    Dim Pfolder, Cfolder As String
+    '    Dim files() As String
+    '    Dim ShortcutPath As String = ""
+    '    Dim ShortcutTarget As String = ""
+    '    Dim folderCount As Integer = 0
+    '    Dim i As Integer = 0
+    '    Dim separatorPOS As Integer = 0
 
-        If System.IO.Directory.Exists(directory) Then
-            diFatherArr = diFather.GetDirectories()
+    '    If System.IO.Directory.Exists(directory) Then
+    '        diFatherArr = diFather.GetDirectories()
 
-            For Each driFather In diFatherArr
-                Dim diChild As New IO.DirectoryInfo(driFather.FullName) 'Create object
-                Dim diChildArr As DirectoryInfo() = diChild.GetDirectories() 'Array to store paths
-                Dim driChild As DirectoryInfo
-                For Each driChild In diChildArr
-                    folderCount = folderCount + 1
-                Next
-            Next
-        End If
+    '        For Each driFather In diFatherArr
+    '            Dim diChild As New IO.DirectoryInfo(driFather.FullName) 'Create object
+    '            Dim diChildArr As DirectoryInfo() = diChild.GetDirectories() 'Array to store paths
+    '            Dim driChild As DirectoryInfo
+    '            For Each driChild In diChildArr
+    '                folderCount = folderCount + 1
+    '            Next
+    '        Next
+    '    End If
 
-        ReDim pathArray(3, folderCount - 1)
+    '    ReDim pathArray(3, folderCount - 1)
 
-        If System.IO.Directory.Exists(directory) Then
-            diFatherArr = diFather.GetDirectories()
+    '    If System.IO.Directory.Exists(directory) Then
+    '        diFatherArr = diFather.GetDirectories()
 
-            For Each driFather In diFatherArr
-                Dim diChild As New IO.DirectoryInfo(driFather.FullName) 'Create object
-                Dim diChildArr As DirectoryInfo() = diChild.GetDirectories() 'Array to store paths
-                Dim driChild As DirectoryInfo
-                For Each driChild In diChildArr
-                    Pfolder = driFather.Name
-                    If UCase(Strings.Left(Pfolder, 1)) = "C" Then Pfolder = Strings.Right(Pfolder, Pfolder.Length - 1)
+    '        For Each driFather In diFatherArr
+    '            Dim diChild As New IO.DirectoryInfo(driFather.FullName) 'Create object
+    '            Dim diChildArr As DirectoryInfo() = diChild.GetDirectories() 'Array to store paths
+    '            Dim driChild As DirectoryInfo
+    '            For Each driChild In diChildArr
+    '                Pfolder = driFather.Name
+    '                If UCase(Strings.Left(Pfolder, 1)) = "C" Then Pfolder = Strings.Right(Pfolder, Pfolder.Length - 1)
 
-                    Cfolder = driChild.Name
-                    Cfolder = Replace(Cfolder, "–", "-")
+    '                Cfolder = driChild.Name
+    '                Cfolder = Replace(Cfolder, "–", "-")
 
-                    files = IO.Directory.GetFiles(driChild.FullName)
-                    For Each file As String In files
-                        If UCase(Path.GetExtension(file)) = ".LNK" Then
-                            ShortcutPath = file
-                        End If
-                    Next
+    '                files = IO.Directory.GetFiles(driChild.FullName)
+    '                For Each file As String In files
+    '                    If UCase(Path.GetExtension(file)) = ".LNK" Then
+    '                        ShortcutPath = file
+    '                    End If
+    '                Next
 
-                    If ShortcutPath <> "" Then
-                        Dim shell = CreateObject("WScript.Shell")
-                        ShortcutTarget = shell.CreateShortcut(ShortcutPath).TargetPath
-                    End If
+    '                If ShortcutPath <> "" Then
+    '                    Dim shell = CreateObject("WScript.Shell")
+    '                    ShortcutTarget = shell.CreateShortcut(ShortcutPath).TargetPath
+    '                End If
 
-                    'ReDim Preserve pathArray(3, i) ' 0 - Nº proj | 1 - Desig. Proj | 2 - Nº cliente | 3 - Pasta Prod.
+    '                'ReDim Preserve pathArray(3, i) ' 0 - Nº proj | 1 - Desig. Proj | 2 - Nº cliente | 3 - Pasta Prod.
 
-                    separatorPOS = InStr(Cfolder, " - ")
+    '                separatorPOS = InStr(Cfolder, " - ")
 
-                    If separatorPOS > 0 Then
-                        Dim nProjAux As String = Strings.Left(Cfolder, separatorPOS - 1)
-                        If nProjAux <> "" Then
-                            pathArray(0, i) = nProjAux
-                            pathArray(1, i) = Strings.Right(Cfolder, Cfolder.Length - separatorPOS - 2)
-                            pathArray(2, i) = CInt(Pfolder)
-                            pathArray(3, i) = ShortcutTarget
-                            i = i + 1
-                        End If
-                    End If
-                Next driChild
-            Next driFather
-        Else
-            MsgBox("Não foi possível obter a listagem dos projetos existentes!")
-            ReDim pathArray(3, 0)
-            pathArray(0, 0) = ""
-            pathArray(1, 0) = ""
-            pathArray(2, 0) = ""
-            pathArray(3, 0) = ""
-        End If
-    End Sub
+    '                If separatorPOS > 0 Then
+    '                    Dim nProjAux As String = Strings.Left(Cfolder, separatorPOS - 1)
+    '                    If nProjAux <> "" Then
+    '                        pathArray(0, i) = nProjAux
+    '                        pathArray(1, i) = Strings.Right(Cfolder, Cfolder.Length - separatorPOS - 2)
+    '                        pathArray(2, i) = CInt(Pfolder)
+    '                        pathArray(3, i) = ShortcutTarget
+    '                        i = i + 1
+    '                    End If
+    '                End If
+    '            Next driChild
+    '        Next driFather
+    '    Else
+    '        MsgBox("Não foi possível obter a listagem dos projetos existentes!")
+    '        ReDim pathArray(3, 0)
+    '        pathArray(0, 0) = ""
+    '        pathArray(1, 0) = ""
+    '        pathArray(2, 0) = ""
+    '        pathArray(3, 0) = ""
+    '    End If
+    'End Sub
 
 
     Sub replaceVars(ByRef text As String)
@@ -269,129 +324,15 @@ Module Functions
         text = Replace(text, "$CnumCliente", CnCliente)
         text = Replace(text, "$numProj", nProj)
         text = Replace(text, "$desProj", desProj)
+        text = Replace(text, "$projGen", desProjGen)
         text = Replace(text, "$numEnc", nEnc)
         text = Replace(text, "$numCliente", nCliente)
         text = Replace(text, "$nomeCliente", nomeCliente)
         text = Replace(text, "$prodAno", anoProd)
         text = Replace(text, "$respProj", respProj)
+        text = Replace(text, "$respAP", respAP)
         text = Replace(text, "\\", "\")
     End Sub
-
-
-    Function checkNprojExists(ByVal nProj As String) As Boolean 'FALSE - OK  |  TRUE - NOK
-        Dim i As Integer
-        Dim nmrAux As String
-        Dim DesigAux, NomeClienteAux As String
-
-        checkNprojExists = False
-
-        For i = 0 To ProjectFolders.GetUpperBound(1)
-            nmrAux = ProjectFolders(0, i)
-            DesigAux = ProjectFolders(1, i)
-            NomeClienteAux = ProjectFolders(3, i)
-            If nmrAux = nProj Then
-                checkNprojExists = True
-                i = ProjectFolders.Length
-                FormMain.TextBox_desig_proj.Enabled = False
-                FormMain.TextBox_desig_proj.Text = DesigAux
-                If FormMain.CheckBoxSnmrCliente.Checked Then
-                    FormMain.TextBox_nome_cliente.Text = NomeClienteAux
-                    FormMain.TextBox_nome_cliente.Enabled = False
-                End If
-                desProjOK = True
-            End If
-        Next
-        If checkNprojExists = False Then FormMain.TextBox_desig_proj.Enabled = True
-    End Function
-
-
-    Function checkNprojFormat(ByVal nProj As String) As Boolean 'FALSE - OK  |  TRUE - NOK
-
-        checkNprojFormat = False
-
-        If nProj <> Nothing Then
-            If TipoPasta = 0 Then
-                If nProj.Length > 3 Then
-                    If nProj(2) <> "." Or nProj.Length <> 7 Then
-                        checkNprojFormat = True
-                    End If
-                Else
-                    checkNprojFormat = True
-                End If
-            Else 'TipoPasta = 1
-                If nProj.Length > 6 Then
-                    If Strings.Right(Strings.Left(nProj, 6), 4) <> ".AP." Or nProj.Length <> 10 Then
-                        checkNprojFormat = True
-                    End If
-                Else
-                    checkNprojFormat = True
-                End If
-            End If
-        End If
-    End Function
-
-
-    Function checkNenc(ByVal nEnc As String, ByVal ProdutoVerto As Boolean) As Boolean 'FALSE - OK  |  TRUE - NOK
-
-        checkNenc = True
-
-        If (Strings.Left(nEnc, 4) = CStr(Year(Now)) Or Strings.Left(nEnc, 4) = CStr(Year(Now) - 1)) Then
-            If Not ProdutoVerto And nEnc.Length = 8 Then
-                checkNenc = False
-            ElseIf ProdutoVerto And nEnc.Length > 9 Then
-                If nEnc(8) = "." Then
-                    checkNenc = False
-                End If
-            End If
-        End If
-
-    End Function
-
-    Function checkNomeCliente(ByVal nomeCli As String, ByRef erro As String) As Boolean 'FALSE - OK  |  TRUE - NOK
-
-        checkNomeCliente = False
-
-        If Not IsValidFileNameOrPath(nomeCli) Then
-            checkNomeCliente = True
-            erro = "A designação do projeto contém caracteres inválidos."
-            Exit Function
-        End If
-
-        If Replace(nomeCli, " ", "") = "" Then
-            checkNomeCliente = True
-            erro = "O campo está vazio."
-        End If
-    End Function
-
-
-    Function checkDesigProj(ByVal DesigProj As String, ByRef erro As String) As Boolean 'FALSE - OK  |  TRUE - NOK
-        Dim i As Integer
-        Dim DesigAux As String
-
-        checkDesigProj = False
-
-        If Not IsValidFileNameOrPath(DesigProj) Then
-            checkDesigProj = True
-            erro = "A designação do projeto contém caracteres inválidos."
-            Exit Function
-        End If
-
-        For i = 0 To ProjectFolders.GetUpperBound(1)
-            DesigAux = ProjectFolders(1, i)
-            If UCase(DesigAux) = UCase(DesigProj) Then
-                checkDesigProj = True
-                erro = "Já existe um projeto com esta designação."
-                Exit Function
-            End If
-        Next
-
-        If Replace(DesigProj, " ", "") = "" Then
-            checkDesigProj = True
-            erro = "O campo está vazio."
-        End If
-
-
-    End Function
 
 
     Sub CBnProjFill(ByVal CB As ComboBox, ByVal nCliente As String)
@@ -403,7 +344,7 @@ Module Functions
 
         For i = 0 To ProjectFolders.GetUpperBound(1)
             nClienteAux = ProjectFolders(2, i)
-            If Not SEMnCliente Then
+            If Not SEMnCliente And IsNumeric(nClienteAux) Then
                 If nClienteAux <> "" And CInt(nClienteAux) = CInt(nCliente) Then
                     CB.Items.Add(ProjectFolders(0, i))
                 End If
@@ -418,8 +359,9 @@ Module Functions
 
 
     Sub CBnomeClienteFill(ByVal CB As ComboBox)
-        Dim i As Integer
+        Dim i, j As Integer
         Dim nClienteAux As String
+        Dim nomeClienteAux As String
 
         CB.Items.Clear()
         CB.Text = ""
@@ -427,10 +369,42 @@ Module Functions
         For i = 0 To ProjectFolders.GetUpperBound(1)
             nClienteAux = ProjectFolders(2, i)
             If UCase(nClienteAux) = "XXXX" Then
-                CB.Items.Add(ProjectFolders(3, i))
+                nomeClienteAux = ProjectFolders(3, i)
+                Dim adicionar As Boolean = True
+                For j = 0 To CB.Items.Count - 1
+                    If CB.Items(j) = nomeClienteAux Then
+                        adicionar = False
+                        Exit For
+                    End If
+                Next
+                If adicionar Then CB.Items.Add(nomeClienteAux)
             End If
         Next
 
+    End Sub
+
+
+    Sub TextboxPastasFill(Optional ByVal ID As Boolean = True, Optional ByVal PROD As Boolean = True)
+        Dim xNodes As XmlNodeList = ModelNode.ChildNodes 'document.SelectNodes("modeldirectory/rootdirectory")
+        Dim folderPath As String
+
+        For Each xNode As XmlNode In xNodes
+            folderPath = xNode.Attributes("path").Value
+            If Strings.Right(folderPath, 1) <> "\" Then folderPath = folderPath & "\"
+
+            replaceVars(folderPath)
+
+            If UCase(xNode.Attributes("name").Value) = "DESENVOLVIMENTO" And ID Then FormMain.TextBoxPastaID.Text = folderPath
+
+            If UCase(xNode.Attributes("name").Value) = "PRODUÇÃO" And PROD Then
+
+                If Not FormMain.CheckBoxProdutoVerto.Checked Then
+                    FormMain.TextBoxPastaProd.Text = folderPath
+                Else
+                    FormMain.TextBoxPastaProd.Text = folderPath & "Produtos Verto\"
+                End If
+            End If
+        Next
     End Sub
 
 
@@ -498,5 +472,16 @@ Module Functions
 
         Return True
     End Function
+
+    Sub releaseObject(ByVal obj As Object)
+        Try
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+        Catch ex As Exception
+            obj = Nothing
+        Finally
+            GC.Collect()
+        End Try
+    End Sub
 
 End Module

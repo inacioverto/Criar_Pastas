@@ -31,7 +31,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>3.0.1.0</ApplicationVersion>
+    <ApplicationVersion>4.1.1.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -71,7 +71,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ICON.ico</ApplicationIcon>
+    <ApplicationIcon>MEDIA\ICON.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>41A50B88FED7D5EC4961BDD23F85919C810A0796</ManifestCertificateThumbprint>
@@ -117,36 +117,36 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="CONNECTION.vb" />
-    <Compile Include="DocumentSelector.Designer.vb">
+    <Compile Include="MODULES\CONNECTION.vb" />
+    <Compile Include="FORMS\DocumentSelector.Designer.vb">
       <DependentUpon>DocumentSelector.vb</DependentUpon>
     </Compile>
-    <Compile Include="DocumentSelector.vb">
+    <Compile Include="FORMS\DocumentSelector.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.vb">
+    <Compile Include="FORMS\FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.vb">
+    <Compile Include="FORMS\FormMain.Designer.vb">
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Functions.vb" />
-    <Compile Include="FunctionsFolderCreation.vb" />
-    <Compile Include="SelectionForm.Designer.vb">
+    <Compile Include="MODULES\Functions.vb" />
+    <Compile Include="MODULES\FunctionsFolderCreation.vb" />
+    <Compile Include="FORMS\SelectionForm.Designer.vb">
       <DependentUpon>SelectionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SelectionForm.vb">
+    <Compile Include="FORMS\SelectionForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Splash.Designer.vb">
-      <DependentUpon>Splash.vb</DependentUpon>
+    <Compile Include="FORMS\SplashScreen.Designer.vb">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="Splash.vb">
+    <Compile Include="FORMS\SplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FunctionsTreeView.vb" />
+    <Compile Include="MODULES\FunctionsTreeView.vb" />
+    <Compile Include="MODULES\FunctionsFieldsValidation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -162,13 +162,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VARS.vb" />
+    <Compile Include="MODULES\VARS.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DocumentSelector.resx">
+    <EmbeddedResource Include="FORMS\DocumentSelector.resx">
       <DependentUpon>DocumentSelector.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="FORMS\FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -177,11 +177,11 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SelectionForm.resx">
+    <EmbeddedResource Include="FORMS\SelectionForm.resx">
       <DependentUpon>SelectionForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Splash.resx">
-      <DependentUpon>Splash.vb</DependentUpon>
+    <EmbeddedResource Include="FORMS\SplashScreen.resx">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -196,15 +196,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ICON.ico" />
-    <None Include="SPLASH.png" />
-    <None Include="logo_verto.png" />
-    <None Include="lg.dual-gear-loading-icon.gif" />
+    <Content Include="MEDIA\ICON.ico" />
+    <None Include="MEDIA\SPLASH.png" />
+    <None Include="MEDIA\logo_verto.png" />
+    <None Include="MEDIA\lg.dual-gear-loading-icon.gif" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -238,6 +235,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>
