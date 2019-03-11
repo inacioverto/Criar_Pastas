@@ -130,10 +130,9 @@ Module FunctionsFolderCreation
 
                     If File.Exists(destFile) = False Then
                         FileCopy(origFile, destFile)
-                    End If
-
-                    If node.HasChildNodes Then
-                        editExcelFile(destFile, node)
+                        If node.HasChildNodes Then
+                            editExcelFile(destFile, node)
+                        End If
                     End If
                 End If
 
