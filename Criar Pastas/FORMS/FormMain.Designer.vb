@@ -61,6 +61,8 @@ Partial Class FormMain
         Me.LabelRespAP = New System.Windows.Forms.Label()
         Me.TextBoxRespAPborder = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.TextBoxProjeto = New System.Windows.Forms.TextBox()
+        Me.LabelProjeto = New System.Windows.Forms.Label()
         Me.PanelButtons.SuspendLayout()
         Me.GroupBoxPastas.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,7 +89,7 @@ Partial Class FormMain
         'LabelNproj
         '
         Me.LabelNproj.AutoSize = True
-        Me.LabelNproj.Location = New System.Drawing.Point(27, 51)
+        Me.LabelNproj.Location = New System.Drawing.Point(27, 50)
         Me.LabelNproj.Name = "LabelNproj"
         Me.LabelNproj.Size = New System.Drawing.Size(58, 13)
         Me.LabelNproj.TabIndex = 2
@@ -96,7 +98,7 @@ Partial Class FormMain
         'TextBox_desig_proj
         '
         Me.TextBox_desig_proj.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox_desig_proj.Location = New System.Drawing.Point(85, 82)
+        Me.TextBox_desig_proj.Location = New System.Drawing.Point(85, 81)
         Me.TextBox_desig_proj.MaxLength = 50
         Me.TextBox_desig_proj.Name = "TextBox_desig_proj"
         Me.TextBox_desig_proj.Size = New System.Drawing.Size(402, 20)
@@ -105,7 +107,7 @@ Partial Class FormMain
         'LabelDesigProj
         '
         Me.LabelDesigProj.AutoSize = True
-        Me.LabelDesigProj.Location = New System.Drawing.Point(9, 86)
+        Me.LabelDesigProj.Location = New System.Drawing.Point(9, 85)
         Me.LabelDesigProj.Name = "LabelDesigProj"
         Me.LabelDesigProj.Size = New System.Drawing.Size(76, 13)
         Me.LabelDesigProj.TabIndex = 4
@@ -114,7 +116,7 @@ Partial Class FormMain
         'TextBox_n_enc
         '
         Me.TextBox_n_enc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox_n_enc.Location = New System.Drawing.Point(85, 117)
+        Me.TextBox_n_enc.Location = New System.Drawing.Point(85, 115)
         Me.TextBox_n_enc.MaxLength = 8
         Me.TextBox_n_enc.Name = "TextBox_n_enc"
         Me.TextBox_n_enc.Size = New System.Drawing.Size(65, 20)
@@ -123,7 +125,7 @@ Partial Class FormMain
         'LabelNenc
         '
         Me.LabelNenc.AutoSize = True
-        Me.LabelNenc.Location = New System.Drawing.Point(38, 121)
+        Me.LabelNenc.Location = New System.Drawing.Point(38, 119)
         Me.LabelNenc.Name = "LabelNenc"
         Me.LabelNenc.Size = New System.Drawing.Size(47, 13)
         Me.LabelNenc.TabIndex = 6
@@ -134,7 +136,7 @@ Partial Class FormMain
         Me.Button_criar.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.Button_criar.Enabled = False
         Me.Button_criar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_criar.Location = New System.Drawing.Point(202, 40)
+        Me.Button_criar.Location = New System.Drawing.Point(247, 10)
         Me.Button_criar.Name = "Button_criar"
         Me.Button_criar.Size = New System.Drawing.Size(75, 23)
         Me.Button_criar.TabIndex = 1
@@ -145,7 +147,7 @@ Partial Class FormMain
         '
         Me.Button_limpar.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.Button_limpar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_limpar.Location = New System.Drawing.Point(354, 40)
+        Me.Button_limpar.Location = New System.Drawing.Point(418, 13)
         Me.Button_limpar.Name = "Button_limpar"
         Me.Button_limpar.Size = New System.Drawing.Size(53, 23)
         Me.Button_limpar.TabIndex = 2
@@ -187,7 +189,7 @@ Partial Class FormMain
         Me.ButtonPreview.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.ButtonPreview.Enabled = False
         Me.ButtonPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonPreview.Location = New System.Drawing.Point(202, 7)
+        Me.ButtonPreview.Location = New System.Drawing.Point(156, 10)
         Me.ButtonPreview.Name = "ButtonPreview"
         Me.ButtonPreview.Size = New System.Drawing.Size(75, 23)
         Me.ButtonPreview.TabIndex = 0
@@ -206,9 +208,9 @@ Partial Class FormMain
         Me.PanelButtons.Controls.Add(Me.Button_limpar)
         Me.PanelButtons.Controls.Add(Me.Button_criar)
         Me.PanelButtons.Controls.Add(Me.ButtonPreview)
-        Me.PanelButtons.Location = New System.Drawing.Point(7, 311)
+        Me.PanelButtons.Location = New System.Drawing.Point(7, 337)
         Me.PanelButtons.Name = "PanelButtons"
-        Me.PanelButtons.Size = New System.Drawing.Size(479, 69)
+        Me.PanelButtons.Size = New System.Drawing.Size(479, 42)
         Me.PanelButtons.TabIndex = 4
         '
         'LabelVersion
@@ -216,7 +218,7 @@ Partial Class FormMain
         Me.LabelVersion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.LabelVersion.AutoSize = True
         Me.LabelVersion.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.LabelVersion.Location = New System.Drawing.Point(-1, 55)
+        Me.LabelVersion.Location = New System.Drawing.Point(-1, 28)
         Me.LabelVersion.Name = "LabelVersion"
         Me.LabelVersion.Size = New System.Drawing.Size(68, 13)
         Me.LabelVersion.TabIndex = 3
@@ -228,7 +230,7 @@ Partial Class FormMain
         Me.ComboBox_n_projeto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox_n_projeto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBox_n_projeto.FormattingEnabled = True
-        Me.ComboBox_n_projeto.Location = New System.Drawing.Point(86, 47)
+        Me.ComboBox_n_projeto.Location = New System.Drawing.Point(86, 46)
         Me.ComboBox_n_projeto.MaxLength = 7
         Me.ComboBox_n_projeto.Name = "ComboBox_n_projeto"
         Me.ComboBox_n_projeto.Size = New System.Drawing.Size(85, 21)
@@ -242,7 +244,7 @@ Partial Class FormMain
         Me.GroupBoxPastas.Controls.Add(Me.TextBoxPastaProd)
         Me.GroupBoxPastas.Controls.Add(Me.LabelPastaProd)
         Me.GroupBoxPastas.Enabled = False
-        Me.GroupBoxPastas.Location = New System.Drawing.Point(7, 216)
+        Me.GroupBoxPastas.Location = New System.Drawing.Point(7, 247)
         Me.GroupBoxPastas.Name = "GroupBoxPastas"
         Me.GroupBoxPastas.Size = New System.Drawing.Size(479, 85)
         Me.GroupBoxPastas.TabIndex = 8
@@ -291,7 +293,7 @@ Partial Class FormMain
         Me.ComboBoxRespProj.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBoxRespProj.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBoxRespProj.FormattingEnabled = True
-        Me.ComboBoxRespProj.Location = New System.Drawing.Point(86, 152)
+        Me.ComboBoxRespProj.Location = New System.Drawing.Point(86, 149)
         Me.ComboBoxRespProj.Name = "ComboBoxRespProj"
         Me.ComboBoxRespProj.Size = New System.Drawing.Size(190, 21)
         Me.ComboBoxRespProj.TabIndex = 9
@@ -299,7 +301,7 @@ Partial Class FormMain
         'LabelRespProj
         '
         Me.LabelRespProj.AutoSize = True
-        Me.LabelRespProj.Location = New System.Drawing.Point(11, 156)
+        Me.LabelRespProj.Location = New System.Drawing.Point(11, 153)
         Me.LabelRespProj.Name = "LabelRespProj"
         Me.LabelRespProj.Size = New System.Drawing.Size(74, 13)
         Me.LabelRespProj.TabIndex = 10
@@ -330,7 +332,7 @@ Partial Class FormMain
         '
         Me.TextBoxRespProjBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxRespProjBorder.Enabled = False
-        Me.TextBoxRespProjBorder.Location = New System.Drawing.Point(85, 151)
+        Me.TextBoxRespProjBorder.Location = New System.Drawing.Point(85, 148)
         Me.TextBoxRespProjBorder.MaxLength = 4
         Me.TextBoxRespProjBorder.Multiline = True
         Me.TextBoxRespProjBorder.Name = "TextBoxRespProjBorder"
@@ -341,7 +343,7 @@ Partial Class FormMain
         '
         Me.TextBoxNprojBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxNprojBorder.Enabled = False
-        Me.TextBoxNprojBorder.Location = New System.Drawing.Point(85, 46)
+        Me.TextBoxNprojBorder.Location = New System.Drawing.Point(85, 45)
         Me.TextBoxNprojBorder.MaxLength = 4
         Me.TextBoxNprojBorder.Multiline = True
         Me.TextBoxNprojBorder.Name = "TextBoxNprojBorder"
@@ -353,7 +355,7 @@ Partial Class FormMain
         Me.CheckBoxSnmrCliente.AutoSize = True
         Me.CheckBoxSnmrCliente.BackColor = System.Drawing.SystemColors.Control
         Me.CheckBoxSnmrCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CheckBoxSnmrCliente.Location = New System.Drawing.Point(191, 50)
+        Me.CheckBoxSnmrCliente.Location = New System.Drawing.Point(191, 48)
         Me.CheckBoxSnmrCliente.Name = "CheckBoxSnmrCliente"
         Me.CheckBoxSnmrCliente.Size = New System.Drawing.Size(109, 17)
         Me.CheckBoxSnmrCliente.TabIndex = 15
@@ -377,7 +379,7 @@ Partial Class FormMain
         '
         Me.TextBoxProjGen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxProjGen.Enabled = False
-        Me.TextBoxProjGen.Location = New System.Drawing.Point(290, 117)
+        Me.TextBoxProjGen.Location = New System.Drawing.Point(290, 115)
         Me.TextBoxProjGen.MaxLength = 50
         Me.TextBoxProjGen.Name = "TextBoxProjGen"
         Me.TextBoxProjGen.Size = New System.Drawing.Size(196, 20)
@@ -388,7 +390,7 @@ Partial Class FormMain
         Me.CheckBoxProjGen.AutoSize = True
         Me.CheckBoxProjGen.BackColor = System.Drawing.SystemColors.Control
         Me.CheckBoxProjGen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CheckBoxProjGen.Location = New System.Drawing.Point(185, 119)
+        Me.CheckBoxProjGen.Location = New System.Drawing.Point(185, 117)
         Me.CheckBoxProjGen.Name = "CheckBoxProjGen"
         Me.CheckBoxProjGen.Size = New System.Drawing.Size(105, 17)
         Me.CheckBoxProjGen.TabIndex = 18
@@ -401,7 +403,7 @@ Partial Class FormMain
         Me.ComboBoxRespAP.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBoxRespAP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBoxRespAP.FormattingEnabled = True
-        Me.ComboBoxRespAP.Location = New System.Drawing.Point(86, 187)
+        Me.ComboBoxRespAP.Location = New System.Drawing.Point(86, 184)
         Me.ComboBoxRespAP.Name = "ComboBoxRespAP"
         Me.ComboBoxRespAP.Size = New System.Drawing.Size(190, 21)
         Me.ComboBoxRespAP.TabIndex = 19
@@ -409,7 +411,7 @@ Partial Class FormMain
         'LabelRespAP
         '
         Me.LabelRespAP.AutoSize = True
-        Me.LabelRespAP.Location = New System.Drawing.Point(0, 191)
+        Me.LabelRespAP.Location = New System.Drawing.Point(0, 188)
         Me.LabelRespAP.Name = "LabelRespAP"
         Me.LabelRespAP.Size = New System.Drawing.Size(85, 13)
         Me.LabelRespAP.TabIndex = 20
@@ -419,7 +421,7 @@ Partial Class FormMain
         '
         Me.TextBoxRespAPborder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBoxRespAPborder.Enabled = False
-        Me.TextBoxRespAPborder.Location = New System.Drawing.Point(85, 186)
+        Me.TextBoxRespAPborder.Location = New System.Drawing.Point(85, 183)
         Me.TextBoxRespAPborder.MaxLength = 4
         Me.TextBoxRespAPborder.Multiline = True
         Me.TextBoxRespAPborder.Name = "TextBoxRespAPborder"
@@ -436,11 +438,33 @@ Partial Class FormMain
         Me.PictureBox1.TabIndex = 7
         Me.PictureBox1.TabStop = False
         '
+        'TextBoxProjeto
+        '
+        Me.TextBoxProjeto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBoxProjeto.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxProjeto.Location = New System.Drawing.Point(84, 220)
+        Me.TextBoxProjeto.MaxLength = 200
+        Me.TextBoxProjeto.Name = "TextBoxProjeto"
+        Me.TextBoxProjeto.ReadOnly = True
+        Me.TextBoxProjeto.Size = New System.Drawing.Size(402, 18)
+        Me.TextBoxProjeto.TabIndex = 22
+        '
+        'LabelProjeto
+        '
+        Me.LabelProjeto.AutoSize = True
+        Me.LabelProjeto.Location = New System.Drawing.Point(40, 223)
+        Me.LabelProjeto.Name = "LabelProjeto"
+        Me.LabelProjeto.Size = New System.Drawing.Size(43, 13)
+        Me.LabelProjeto.TabIndex = 23
+        Me.LabelProjeto.Text = "Projeto:"
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(934, 388)
+        Me.Controls.Add(Me.TextBoxProjeto)
+        Me.Controls.Add(Me.LabelProjeto)
         Me.Controls.Add(Me.ComboBoxRespAP)
         Me.Controls.Add(Me.LabelRespAP)
         Me.Controls.Add(Me.CheckBoxProjGen)
@@ -520,4 +544,6 @@ Partial Class FormMain
     Friend WithEvents ComboBoxRespAP As ComboBox
     Friend WithEvents LabelRespAP As Label
     Friend WithEvents TextBoxRespAPborder As TextBox
+    Friend WithEvents TextBoxProjeto As TextBox
+    Friend WithEvents LabelProjeto As Label
 End Class

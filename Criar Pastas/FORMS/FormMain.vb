@@ -167,7 +167,7 @@ Public Class FormMain
             TreeView1.Nodes.Add(tNode)
 
             If xNode.HasChildNodes Then
-                getFiles(folderPath, xNode.ChildNodes)
+                'getFiles(folderPath, xNode.ChildNodes)
                 'DocumentSelector.ShowDialog()
                 CreateSubDirectoriesTreeview(folderPath, xNode.ChildNodes, tNode, CheckBoxProdutoVerto.Checked)
             End If
@@ -324,6 +324,9 @@ Public Class FormMain
             ComboBoxRespProj.Visible = False
             LabelRespProj.Visible = False
             TextBoxRespProjBorder.Visible = False
+
+            LabelProjeto.Visible = False
+            TextBoxProjeto.Visible = False
 
             ComboBoxRespAP.Location = New Point(ComboBoxRespAP.Location.X, ComboBoxRespAP.Location.Y - yOffset)
             LabelRespAP.Location = New Point(24, LabelRespAP.Location.Y - yOffset)
