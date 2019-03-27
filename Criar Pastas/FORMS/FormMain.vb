@@ -325,6 +325,9 @@ Public Class FormMain
             LabelRespProj.Visible = False
             TextBoxRespProjBorder.Visible = False
 
+            LabelProjeto.Visible = False
+            TextBoxProjeto.Visible = False
+
             ComboBoxRespAP.Location = New Point(ComboBoxRespAP.Location.X, ComboBoxRespAP.Location.Y - yOffset)
             LabelRespAP.Location = New Point(24, LabelRespAP.Location.Y - yOffset)
             LabelRespAP.Text = "Resp.A.P.:"

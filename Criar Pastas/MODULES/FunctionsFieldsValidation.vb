@@ -11,15 +11,26 @@
     End Sub
 
     Private Sub fieldActivation()
-        If nClienteOK And nProjOK And nEncOK And nomeClienteOK Then 'nproj 'nenc 'ncliente 'desigproj
-            FormMain.GroupBoxPastas.Enabled = True
-            TextboxPastasFill()
-            If desProjOK And desProjGenOK Then
-                FormMain.ButtonPreview.Enabled = True
-            Else
-                FormMain.ButtonPreview.Enabled = False
+        If nClienteOK And nProjOK Then 'nproj 'nenc 'ncliente 'desigproj
+            FormMain.TextBoxProjeto.Text = nProj + " - " + desProj
+            If desProjGenOK And projGen Then
+                FormMain.TextBoxProjeto.Text = FormMain.TextBoxProjeto.Text + " | " + desProjGen
             End If
-        Else
+            If nEncOK Then
+                FormMain.TextBoxProjeto.Text = FormMain.TextBoxProjeto.Text + " | " + nEnc
+            End If
+
+            If nEncOK And desProjOK Then
+                FormMain.GroupBoxPastas.Enabled = True
+                TextboxPastasFill()
+                If desProjOK And desProjGenOK Then
+                    FormMain.ButtonPreview.Enabled = True
+                Else
+                    FormMain.ButtonPreview.Enabled = False
+                End If
+            End If
+
+        ElseIf Not nEncOK Or Not nomeClienteOK Then
             FormMain.GroupBoxPastas.Enabled = False
             FormMain.TextBoxPastaID.Text = ""
             FormMain.TextBoxPastaProd.Text = ""
