@@ -25,7 +25,9 @@ Module FunctionsFolderCreation
                 currentPath = FormMain.TextBoxPastaProd.Text
                 pastaClienteProd = currentPath
             Else
-                MsgBox("Erro nas pastas")
+                'MsgBox("Erro nas pastas")
+                msg = New CustomMessageBox("Erro nas pastas", "Terminar")
+                msg.ShowDialog()
                 Exit Sub
             End If
 
@@ -36,9 +38,10 @@ Module FunctionsFolderCreation
             End If
 
             If node.HasChildNodes Then
-                CreateSubDirectories(currentPath, node.ChildNodes)
+                CreateSubDirectories(currentPath, node.ChildNodes, SEMnCliente)
             End If
         Next
+
         If Not newExlApp Then
             exlApp.Quit()
             releaseObject(exlApp)
@@ -47,58 +50,81 @@ Module FunctionsFolderCreation
     End Sub
 
 
-    Sub CreateSubDirectories(ByVal currentPath As String, ByVal nodes As XmlNodeList)
+    Sub CreateSubDirectories(ByVal currentPath As String, ByVal nodes As XmlNodeList, ByVal checkCXXXX As Boolean)
+
         For Each node As XmlNode In nodes
 
             If node.Name = "directory" Then
+                Dim fullPath As String = currentPath
                 Dim projGenOnly As Boolean
+                Dim openFolder As Boolean
+
+                openFolder = False
+                projGenOnly = False
                 Try
                     projGenOnly = node.Attributes("projGenOnly").Value
                 Catch 'ex As Exception
-                    projGenOnly = False
+
+                End Try
+
+                Try
+                    openFolder = node.Attributes("open").Value
+                Catch 'ex As Exception
+
                 End Try
 
                 If Not projGenOnly Or projGen Then 'não faz nada se for verdadeiro projGenOnly e falso projGen
-                    Dim CXXX As Boolean
+                    Dim CXXXX As Boolean = False
+                    Dim CXXXXfolder As String = ""
+
                     Try
-                        CXXX = node.Attributes("CXXXX").Value
+                        CXXXXfolder = node.Attributes("CXXXXfolder").Value
                     Catch 'ex As Exception
-                        CXXX = False
+
                     End Try
 
-                    If CXXX And SEMnCliente Then
-                        currentPath = currentPath & nomeCliente & "\"
+                    If CXXXXfolder <> "" And checkCXXXX Then CXXXX = True
 
-                        If My.Computer.FileSystem.GetDirectoryInfo(currentPath).Exists = False Then
-                            Directory.CreateDirectory(currentPath)
-                            'Debug.Print(currentPath)
+                    Dim directoryName As String
+
+                    If CXXXX And SEMnCliente Then
+                        directoryName = CXXXXfolder
+
+                    Else
+                        directoryName = node.Attributes("name").Value
+
+                        If projGen Then
+                            Dim projGenValue As String
+                            Try
+                                projGenValue = node.Attributes("projGenValue").Value
+                            Catch 'ex As Exception
+                                projGenValue = ""
+                            End Try
+                            directoryName = directoryName + projGenValue
                         End If
+
+                        replaceVars(directoryName)
                     End If
 
-                    Dim directoryName As String = node.Attributes("name").Value
-                    Dim fullPath As String = currentPath + directoryName
-
-                    If projGen Then
-                        Dim projGenValue As String
-                        Try
-                            projGenValue = node.Attributes("projGenValue").Value
-                        Catch 'ex As Exception
-                            projGenValue = ""
-                        End Try
-                        fullPath = fullPath + projGenValue
-                    End If
-
-                    fullPath = fullPath + "\"
-                    replaceVars(fullPath)
+                    fullPath = currentPath + directoryName + "\"
 
                     If My.Computer.FileSystem.GetDirectoryInfo(fullPath).Exists = False Then
                         Directory.CreateDirectory(fullPath)
                         'Debug.Print(fullPath)
                     End If
 
-                    If node.HasChildNodes Then
-                        CreateSubDirectories(fullPath, node.ChildNodes)
+                    If CXXXX And SEMnCliente Then
+                        'fullPath = fullPath & CXXXXfolder & "\"
+
+                        CreateSubDirectories(fullPath, nodes, False)
+                        'End If
+                    ElseIf node.HasChildNodes Then
+                        CreateSubDirectories(fullPath, node.ChildNodes, SEMnCliente)
                     End If
+                End If
+
+                If openFolder Then
+                    Process.Start("explorer.exe", fullPath)
                 End If
 
             ElseIf node.Name = "file" Then
@@ -147,7 +173,7 @@ Module FunctionsFolderCreation
                 If Strings.Right(orig, 1) <> "\" Then orig = orig & "\"
 
                 CreateShortCut(orig, currentPath, name)
-                Process.Start("explorer.exe", currentPath)
+                'Process.Start("explorer.exe", currentPath)
             End If
         Next
     End Sub

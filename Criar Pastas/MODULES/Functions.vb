@@ -50,7 +50,9 @@ Module Functions
                 End If
             Next
         Else
-            MsgBox("Erro no ficheiro xml: secççao 'modeldirectory' não encontrada.", MsgBoxStyle.MsgBoxSetForeground)
+            'MsgBox("Erro no ficheiro xml: secççao 'modeldirectory' não encontrada.", MsgBoxStyle.MsgBoxSetForeground)
+            msg = New CustomMessageBox("Erro no ficheiro xml: secççao 'modeldirectory' não encontrada.", "Terminar")
+            msg.ShowDialog()
             End
         End If
     End Function
@@ -74,7 +76,8 @@ Module Functions
                 dt.Load(Sdr)
                 NomeClienteSybus = dt.Rows(0)("nome1").ToString()
             Catch ex As Exception
-                MsgBox(ex.ToString)
+                'MsgBox(ex.ToString)
+                msg = New CustomMessageBox("O nº de cliente não foi encontrado no Sybus.", "Ok")
             End Try
             con.Close()
         End If
@@ -149,7 +152,9 @@ Module Functions
             table.Clear()
 
         Else
-            MsgBox("Não foi possível obter a listagem dos projetos existentes!")
+            'MsgBox("Não foi possível obter a listagem dos projetos existentes!")
+            msg = New CustomMessageBox("Não foi possível obter a listagem dos projetos existentes!", "Ok")
+            msg.ShowDialog()
             ReDim pathArray(3, 0)
             pathArray(0, 0) = ""
             pathArray(1, 0) = ""
@@ -207,7 +212,9 @@ Module Functions
             table.Clear()
 
         Else
-            MsgBox("Não foi possível obter a listagem dos projetos existentes!")
+            'MsgBox("Não foi possível obter a listagem dos projetos existentes!")
+            msg = New CustomMessageBox("Não foi possível obter a listagem dos projetos existentes!", "Ok")
+            msg.ShowDialog()
             ReDim pathArray(3, 0)
             pathArray(0, 0) = ""
             pathArray(1, 0) = ""
@@ -321,7 +328,11 @@ Module Functions
     Sub replaceVars(ByRef text As String)
         text = Replace(text, "$data", Now.ToString("yyyy-MM-dd"))
         text = Replace(text, "$pastaProd", PastaProd)
-        text = Replace(text, "$CnumCliente", CnCliente)
+        If Not SEMnCliente Then
+            text = Replace(text, "$CnumCliente", CnCliente)
+        Else
+            text = Replace(text, "$CnumCliente", nomeCliente)
+        End If
         text = Replace(text, "$numProj", nProj)
         text = Replace(text, "$desProj", desProj)
         text = Replace(text, "$projGen", desProjGen)
@@ -411,7 +422,9 @@ Module Functions
     Function OnlyNumbers(ByVal texto As String) As String
         OnlyNumbers = texto
         If Not IsNumeric(texto) And texto <> vbNullString Then
-            MsgBox("Sorry, only numbers allowed")
+            'MsgBox("Sorry, only numbers allowed")
+            msg = New CustomMessageBox("Apenas são permitidos números.", "Ok")
+            msg.ShowDialog()
             OnlyNumbers = Strings.Left(texto, Len(texto) - 1)
         End If
 
@@ -442,7 +455,9 @@ Module Functions
 
             If validacao = False Then
                 check_double = Strings.Left(texto, Len(texto) - 1)
-                MsgBox("Sorry, only numbers allowed")
+                'MsgBox("Sorry, only numbers allowed")
+                msg = New CustomMessageBox("Apenas são permitidos números", "Ok")
+                msg.ShowDialog()
             End If
         End If
     End Function

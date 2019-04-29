@@ -20,7 +20,7 @@
                 FormMain.TextBoxProjeto.Text = FormMain.TextBoxProjeto.Text + " | " + nEnc
             End If
 
-            If nEncOK And desProjOK Then
+            If nEncOK And desProjOK And nomeClienteOK Then
                 FormMain.GroupBoxPastas.Enabled = True
                 TextboxPastasFill()
                 If desProjOK And desProjGenOK Then
@@ -207,6 +207,7 @@
                 End If
             End If
         End If
+
         If activateFields Then Call fieldActivation()
     End Sub
 
