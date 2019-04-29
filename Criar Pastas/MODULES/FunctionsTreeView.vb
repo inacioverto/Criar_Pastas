@@ -6,7 +6,8 @@ Imports System.IO
 Module FunctionsTreeView
 
 
-    Sub CreateSubDirectoriesTreeview(ByVal PARENTpath As String, ByVal xNodes As XmlNodeList, ByVal TparentNode As TreeNode, ByVal produtoVerto As Boolean)
+    Sub CreateSubDirectoriesTreeview(ByVal PARENTpath As String, ByVal xNodes As XmlNodeList, ByVal TparentNode As TreeNode, ByVal checkCXXXX As Boolean)
+
         If Strings.Right(PARENTpath, 1) <> "\" Then PARENTpath = PARENTpath & "\"
 
         For Each xNode As XmlNode In xNodes
@@ -20,39 +21,38 @@ Module FunctionsTreeView
                 End Try
 
                 If Not projGenOnly Or projGen Then 'não faz nada se for verdadeiro projGenOnly e falso projGen
-                    Dim CXXX As Boolean
+                    Dim CXXXX As Boolean = False
+                    Dim CXXXXfolder As String = ""
+
                     Try
-                        CXXX = xNode.Attributes("CXXXX").Value
+                        CXXXXfolder = xNode.Attributes("CXXXXfolder").Value
                     Catch 'ex As Exception
-                        CXXX = False
+
                     End Try
 
+                    If CXXXXfolder <> "" And checkCXXXX Then CXXXX = True
+
                     Dim tNode As TreeNode
+                    Dim name As String
 
-                    If CXXX And SEMnCliente Then
-                        PARENTpath = PARENTpath & nomeCliente & "\"
+                    If CXXXX And SEMnCliente Then
+                        name = CXXXXfolder
 
-                        tNode = New TreeNode(nomeCliente)
+                    Else
+                        name = xNode.Attributes("name").Value
 
-                        If CreateNodeTreeview(PARENTpath, xNode.ChildNodes) Then
-                            TparentNode.Nodes.Add(tNode)
+                        If projGen Then
+                            Dim projGenValue As String
+                            Try
+                                projGenValue = xNode.Attributes("projGenValue").Value
+                            Catch 'ex As Exception
+                                projGenValue = ""
+                            End Try
+                            name = name + projGenValue
                         End If
-                        TparentNode = tNode
+
+                        replaceVars(name)
                     End If
-
-                    Dim name As String = xNode.Attributes("name").Value
-
-                    If projGen Then
-                        Dim projGenValue As String
-                        Try
-                            projGenValue = xNode.Attributes("projGenValue").Value
-                        Catch 'ex As Exception
-                            projGenValue = ""
-                        End Try
-                        name = name + projGenValue
-                    End If
-
-                    replaceVars(name)
 
                     Dim fullPath As String = PARENTpath & name
 
@@ -62,8 +62,13 @@ Module FunctionsTreeView
                         TparentNode.Nodes.Add(tNode)
                     End If
 
-                    If xNode.HasChildNodes Then
-                        CreateSubDirectoriesTreeview(fullPath, xNode.ChildNodes, tNode, produtoVerto)
+                    If CXXXX And SEMnCliente Then
+                        'fullPath = fullPath & CXXXXfolder & "\"
+
+                        CreateSubDirectoriesTreeview(fullPath, xNodes, tNode, False)
+                        'End If
+                    ElseIf xNode.HasChildNodes Then
+                        CreateSubDirectoriesTreeview(fullPath, xNode.ChildNodes, tNode, SEMnCliente)
                     End If
                 End If
 
@@ -104,7 +109,7 @@ Module FunctionsTreeView
                 End If
 
             ElseIf xNode.Name = "shortcut" Then
-                    Dim name As String = xNode.Attributes("name").Value
+                Dim name As String = xNode.Attributes("name").Value
                 ' orig As String = xNode.Attributes("orig").Value
                 'Dim dest As String = node.Attributes("dest").Value
                 replaceVars(name)

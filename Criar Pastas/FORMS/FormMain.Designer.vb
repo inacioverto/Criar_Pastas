@@ -41,28 +41,25 @@ Partial Class FormMain
         Me.ToolTipDesigProj = New System.Windows.Forms.ToolTip(Me.components)
         Me.PanelButtons = New System.Windows.Forms.Panel()
         Me.LabelVersion = New System.Windows.Forms.Label()
-        Me.ComboBox_n_projeto = New System.Windows.Forms.ComboBox()
         Me.GroupBoxPastas = New System.Windows.Forms.GroupBox()
         Me.TextBoxPastaID = New System.Windows.Forms.TextBox()
         Me.LabelPastaID = New System.Windows.Forms.Label()
         Me.TextBoxPastaProd = New System.Windows.Forms.TextBox()
         Me.LabelPastaProd = New System.Windows.Forms.Label()
-        Me.ComboBoxRespProj = New System.Windows.Forms.ComboBox()
         Me.LabelRespProj = New System.Windows.Forms.Label()
         Me.CheckBoxProdutoVerto = New System.Windows.Forms.CheckBox()
         Me.TextBox_nome_cliente = New System.Windows.Forms.TextBox()
-        Me.TextBoxRespProjBorder = New System.Windows.Forms.TextBox()
-        Me.TextBoxNprojBorder = New System.Windows.Forms.TextBox()
         Me.CheckBoxSnmrCliente = New System.Windows.Forms.CheckBox()
-        Me.ComboBox_nome_cliente = New System.Windows.Forms.ComboBox()
         Me.TextBoxProjGen = New System.Windows.Forms.TextBox()
         Me.CheckBoxProjGen = New System.Windows.Forms.CheckBox()
-        Me.ComboBoxRespAP = New System.Windows.Forms.ComboBox()
         Me.LabelRespAP = New System.Windows.Forms.Label()
-        Me.TextBoxRespAPborder = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TextBoxProjeto = New System.Windows.Forms.TextBox()
         Me.LabelProjeto = New System.Windows.Forms.Label()
+        Me.ComboBoxRespAP = New Criar_Pastas.FlatCombo()
+        Me.ComboBox_nome_cliente = New Criar_Pastas.FlatCombo()
+        Me.ComboBoxRespProj = New Criar_Pastas.FlatCombo()
+        Me.ComboBox_n_projeto = New Criar_Pastas.FlatCombo()
         Me.PanelButtons.SuspendLayout()
         Me.GroupBoxPastas.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -224,18 +221,6 @@ Partial Class FormMain
         Me.LabelVersion.TabIndex = 3
         Me.LabelVersion.Text = "LabelVersion"
         '
-        'ComboBox_n_projeto
-        '
-        Me.ComboBox_n_projeto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.ComboBox_n_projeto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.ComboBox_n_projeto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBox_n_projeto.FormattingEnabled = True
-        Me.ComboBox_n_projeto.Location = New System.Drawing.Point(86, 46)
-        Me.ComboBox_n_projeto.MaxLength = 7
-        Me.ComboBox_n_projeto.Name = "ComboBox_n_projeto"
-        Me.ComboBox_n_projeto.Size = New System.Drawing.Size(85, 21)
-        Me.ComboBox_n_projeto.TabIndex = 1
-        '
         'GroupBoxPastas
         '
         Me.GroupBoxPastas.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -287,17 +272,6 @@ Partial Class FormMain
         Me.LabelPastaProd.TabIndex = 6
         Me.LabelPastaProd.Text = "Produção:"
         '
-        'ComboBoxRespProj
-        '
-        Me.ComboBoxRespProj.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.ComboBoxRespProj.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.ComboBoxRespProj.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBoxRespProj.FormattingEnabled = True
-        Me.ComboBoxRespProj.Location = New System.Drawing.Point(86, 149)
-        Me.ComboBoxRespProj.Name = "ComboBoxRespProj"
-        Me.ComboBoxRespProj.Size = New System.Drawing.Size(190, 21)
-        Me.ComboBoxRespProj.TabIndex = 9
-        '
         'LabelRespProj
         '
         Me.LabelRespProj.AutoSize = True
@@ -322,33 +296,12 @@ Partial Class FormMain
         '
         Me.TextBox_nome_cliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox_nome_cliente.Enabled = False
-        Me.TextBox_nome_cliente.Location = New System.Drawing.Point(129, 11)
+        Me.TextBox_nome_cliente.Location = New System.Drawing.Point(129, 12)
         Me.TextBox_nome_cliente.Multiline = True
         Me.TextBox_nome_cliente.Name = "TextBox_nome_cliente"
-        Me.TextBox_nome_cliente.Size = New System.Drawing.Size(170, 23)
-        Me.TextBox_nome_cliente.TabIndex = 12
-        '
-        'TextBoxRespProjBorder
-        '
-        Me.TextBoxRespProjBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBoxRespProjBorder.Enabled = False
-        Me.TextBoxRespProjBorder.Location = New System.Drawing.Point(85, 148)
-        Me.TextBoxRespProjBorder.MaxLength = 4
-        Me.TextBoxRespProjBorder.Multiline = True
-        Me.TextBoxRespProjBorder.Name = "TextBoxRespProjBorder"
-        Me.TextBoxRespProjBorder.Size = New System.Drawing.Size(192, 23)
-        Me.TextBoxRespProjBorder.TabIndex = 13
-        '
-        'TextBoxNprojBorder
-        '
-        Me.TextBoxNprojBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBoxNprojBorder.Enabled = False
-        Me.TextBoxNprojBorder.Location = New System.Drawing.Point(85, 45)
-        Me.TextBoxNprojBorder.MaxLength = 4
-        Me.TextBoxNprojBorder.Multiline = True
-        Me.TextBoxNprojBorder.Name = "TextBoxNprojBorder"
-        Me.TextBoxNprojBorder.Size = New System.Drawing.Size(87, 23)
-        Me.TextBoxNprojBorder.TabIndex = 14
+        Me.TextBox_nome_cliente.Size = New System.Drawing.Size(170, 20)
+        Me.TextBox_nome_cliente.TabIndex = 1
+        Me.TextBox_nome_cliente.Visible = False
         '
         'CheckBoxSnmrCliente
         '
@@ -362,18 +315,6 @@ Partial Class FormMain
         Me.CheckBoxSnmrCliente.Text = "Sem Nº de Cliente"
         Me.CheckBoxSnmrCliente.UseVisualStyleBackColor = False
         Me.CheckBoxSnmrCliente.Visible = False
-        '
-        'ComboBox_nome_cliente
-        '
-        Me.ComboBox_nome_cliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.ComboBox_nome_cliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.ComboBox_nome_cliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBox_nome_cliente.FormattingEnabled = True
-        Me.ComboBox_nome_cliente.Location = New System.Drawing.Point(130, 12)
-        Me.ComboBox_nome_cliente.Name = "ComboBox_nome_cliente"
-        Me.ComboBox_nome_cliente.Size = New System.Drawing.Size(168, 21)
-        Me.ComboBox_nome_cliente.TabIndex = 16
-        Me.ComboBox_nome_cliente.Visible = False
         '
         'TextBoxProjGen
         '
@@ -397,17 +338,6 @@ Partial Class FormMain
         Me.CheckBoxProjGen.Text = "Projeto Genérico:"
         Me.CheckBoxProjGen.UseVisualStyleBackColor = False
         '
-        'ComboBoxRespAP
-        '
-        Me.ComboBoxRespAP.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.ComboBoxRespAP.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.ComboBoxRespAP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ComboBoxRespAP.FormattingEnabled = True
-        Me.ComboBoxRespAP.Location = New System.Drawing.Point(86, 184)
-        Me.ComboBoxRespAP.Name = "ComboBoxRespAP"
-        Me.ComboBoxRespAP.Size = New System.Drawing.Size(190, 21)
-        Me.ComboBoxRespAP.TabIndex = 19
-        '
         'LabelRespAP
         '
         Me.LabelRespAP.AutoSize = True
@@ -416,17 +346,6 @@ Partial Class FormMain
         Me.LabelRespAP.Size = New System.Drawing.Size(85, 13)
         Me.LabelRespAP.TabIndex = 20
         Me.LabelRespAP.Text = "Resp. Processo:"
-        '
-        'TextBoxRespAPborder
-        '
-        Me.TextBoxRespAPborder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBoxRespAPborder.Enabled = False
-        Me.TextBoxRespAPborder.Location = New System.Drawing.Point(85, 183)
-        Me.TextBoxRespAPborder.MaxLength = 4
-        Me.TextBoxRespAPborder.Multiline = True
-        Me.TextBoxRespAPborder.Name = "TextBoxRespAPborder"
-        Me.TextBoxRespAPborder.Size = New System.Drawing.Size(192, 23)
-        Me.TextBoxRespAPborder.TabIndex = 21
         '
         'PictureBox1
         '
@@ -458,6 +377,52 @@ Partial Class FormMain
         Me.LabelProjeto.TabIndex = 23
         Me.LabelProjeto.Text = "Projeto:"
         '
+        'ComboBoxRespAP
+        '
+        Me.ComboBoxRespAP.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBoxRespAP.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBoxRespAP.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ComboBoxRespAP.FormattingEnabled = True
+        Me.ComboBoxRespAP.Location = New System.Drawing.Point(86, 184)
+        Me.ComboBoxRespAP.Name = "ComboBoxRespAP"
+        Me.ComboBoxRespAP.Size = New System.Drawing.Size(190, 21)
+        Me.ComboBoxRespAP.TabIndex = 19
+        '
+        'ComboBox_nome_cliente
+        '
+        Me.ComboBox_nome_cliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBox_nome_cliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBox_nome_cliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ComboBox_nome_cliente.FormattingEnabled = True
+        Me.ComboBox_nome_cliente.Location = New System.Drawing.Point(129, 12)
+        Me.ComboBox_nome_cliente.Name = "ComboBox_nome_cliente"
+        Me.ComboBox_nome_cliente.Size = New System.Drawing.Size(168, 21)
+        Me.ComboBox_nome_cliente.TabIndex = 1
+        Me.ComboBox_nome_cliente.Visible = False
+        '
+        'ComboBoxRespProj
+        '
+        Me.ComboBoxRespProj.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBoxRespProj.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBoxRespProj.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ComboBoxRespProj.FormattingEnabled = True
+        Me.ComboBoxRespProj.Location = New System.Drawing.Point(86, 149)
+        Me.ComboBoxRespProj.Name = "ComboBoxRespProj"
+        Me.ComboBoxRespProj.Size = New System.Drawing.Size(190, 21)
+        Me.ComboBoxRespProj.TabIndex = 9
+        '
+        'ComboBox_n_projeto
+        '
+        Me.ComboBox_n_projeto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBox_n_projeto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBox_n_projeto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ComboBox_n_projeto.FormattingEnabled = True
+        Me.ComboBox_n_projeto.Location = New System.Drawing.Point(85, 46)
+        Me.ComboBox_n_projeto.MaxLength = 7
+        Me.ComboBox_n_projeto.Name = "ComboBox_n_projeto"
+        Me.ComboBox_n_projeto.Size = New System.Drawing.Size(85, 21)
+        Me.ComboBox_n_projeto.TabIndex = 1
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -487,9 +452,6 @@ Partial Class FormMain
         Me.Controls.Add(Me.LabelNproj)
         Me.Controls.Add(Me.TextBox_n_cliente)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.TextBoxRespProjBorder)
-        Me.Controls.Add(Me.TextBoxNprojBorder)
-        Me.Controls.Add(Me.TextBoxRespAPborder)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -524,26 +486,23 @@ Partial Class FormMain
     Friend WithEvents ToolTipDesigProj As ToolTip
     Friend WithEvents PanelButtons As Panel
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents ComboBox_n_projeto As ComboBox
     Friend WithEvents GroupBoxPastas As GroupBox
     Friend WithEvents TextBoxPastaID As TextBox
     Friend WithEvents LabelPastaID As Label
     Friend WithEvents TextBoxPastaProd As TextBox
     Friend WithEvents LabelPastaProd As Label
-    Friend WithEvents ComboBoxRespProj As ComboBox
     Friend WithEvents LabelRespProj As Label
     Friend WithEvents CheckBoxProdutoVerto As CheckBox
     Friend WithEvents LabelVersion As Label
     Friend WithEvents TextBox_nome_cliente As TextBox
-    Friend WithEvents TextBoxRespProjBorder As TextBox
-    Friend WithEvents TextBoxNprojBorder As TextBox
     Friend WithEvents CheckBoxSnmrCliente As CheckBox
-    Friend WithEvents ComboBox_nome_cliente As ComboBox
     Friend WithEvents TextBoxProjGen As TextBox
     Friend WithEvents CheckBoxProjGen As CheckBox
-    Friend WithEvents ComboBoxRespAP As ComboBox
     Friend WithEvents LabelRespAP As Label
-    Friend WithEvents TextBoxRespAPborder As TextBox
     Friend WithEvents TextBoxProjeto As TextBox
     Friend WithEvents LabelProjeto As Label
+    Friend WithEvents ComboBox_n_projeto As FlatCombo
+    Friend WithEvents ComboBoxRespProj As FlatCombo
+    Friend WithEvents ComboBox_nome_cliente As FlatCombo
+    Friend WithEvents ComboBoxRespAP As FlatCombo
 End Class

@@ -22,12 +22,14 @@ Public Class FormMain
 
     Private Sub Button_criar_Click(sender As Object, e As EventArgs) Handles Button_criar.Click
         CreateDirectories(ModelNode.ChildNodes) 'document.SelectNodes("modeldirectory/rootdirectory"))
-        MsgBox("Criação de pastas terminada.")
+        'MsgBox("Criação de pastas terminada.")
+        msg = New CustomMessageBox("Criação de pastas terminada.", "Ok")
+        msg.ShowDialog()
         Button_criar.Enabled = False
     End Sub
-	
 
-	Private Sub TextBox_n_cliente_TextChanged(sender As Object, e As EventArgs) Handles TextBox_n_cliente.TextChanged
+
+    Private Sub TextBox_n_cliente_TextChanged(sender As Object, e As EventArgs) Handles TextBox_n_cliente.TextChanged
         If Not SEMnCliente Then TextBox_n_cliente.Text = OnlyNumbers(TextBox_n_cliente.Text)
 
         previewClean()
@@ -39,7 +41,7 @@ Public Class FormMain
             ComboBox_n_projeto.Text = ""
         End If
     End Sub
-	
+
 
     Private Sub ComboBox_n_projeto_TextChanged(sender As Object, e As EventArgs) Handles ComboBox_n_projeto.TextChanged
         If TipoPasta = 0 Then
@@ -157,7 +159,9 @@ Public Class FormMain
             ElseIf UCase(xNode.Attributes("name").Value) = "PRODUÇÃO" Then
                 folderPath = TextBoxPastaProd.Text
             Else
-                MsgBox("Erro nas pastas")
+                'MsgBox("Erro nas pastas")
+                msg = New CustomMessageBox("Erro no carregamento das pastas raiz.", "Terminar")
+                msg.ShowDialog()
                 Exit Sub
             End If
 
@@ -169,7 +173,7 @@ Public Class FormMain
             If xNode.HasChildNodes Then
                 'getFiles(folderPath, xNode.ChildNodes)
                 'DocumentSelector.ShowDialog()
-                CreateSubDirectoriesTreeview(folderPath, xNode.ChildNodes, tNode, CheckBoxProdutoVerto.Checked)
+                CreateSubDirectoriesTreeview(folderPath, xNode.ChildNodes, tNode, CheckBoxSnmrCliente.Checked)
             End If
             tNode = New TreeNode("")
             TreeView1.Nodes.Add(tNode)
@@ -181,17 +185,21 @@ Public Class FormMain
         Dim txt As String = ""
         If TipoPasta = 0 Then
             If ComboBoxRespProj.Text = "" And ComboBoxRespAP.Text = "" Then
-                txt = "Os campos Responsável do Projeto e Responsável do Processo não estão preenchidos."
+                txt = "Os campos 'Responsável do Projeto' e 'Responsável do Processo' não estão preenchidos."
             ElseIf ComboBoxRespProj.Text = "" Then
-                txt = "O campo Responsável do Projeto não está preenchido."
+                txt = "O campo 'Responsável do Projeto' não está preenchido."
             ElseIf ComboBoxRespap.Text = "" Then
-                txt = "O campo Responsável do Processo não está preenchido."
+                txt = "O campo 'Responsável do Processo' não está preenchido."
             End If
         Else
-            If ComboBoxRespAP.Text = "" Then txt = "O campo Responsável de A.P. não está preenchido."
+            If ComboBoxRespAP.Text = "" Then txt = "O campo 'Responsável de A.P.' não está preenchido."
         End If
 
-        If txt <> "" Then MsgBox(txt)
+        If txt <> "" Then
+            'MsgBox(txt)
+            msg = New CustomMessageBox(txt, "Ok")
+            msg.ShowDialog()
+        End If
 
         Button_criar.Enabled = True
     End Sub
@@ -274,7 +282,9 @@ Public Class FormMain
                 document.Load("e:\Users\Inacio\Documents\Seafile\VERTO\PROGRAMACAO\Criar_Pastas\IGNORE\folderTree_I.xml")
                 debug = True
             Else
-                MsgBox("O ficheiro xml com a árvore de pastas não foi encontrado.", MsgBoxStyle.MsgBoxSetForeground)
+                'MsgBox("O ficheiro xml com a árvore de pastas não foi encontrado.", MsgBoxStyle.MsgBoxSetForeground)
+                msg = New CustomMessageBox("O ficheiro xml com a árvore de pastas não foi encontrado.", "Terminar")
+                msg.ShowDialog()
                 End
             End If
         End Try
@@ -323,7 +333,7 @@ Public Class FormMain
             LabelRespProj.Visible = False
             ComboBoxRespProj.Visible = False
             LabelRespProj.Visible = False
-            TextBoxRespProjBorder.Visible = False
+            'TextBoxRespProjBorder.Visible = False
 
             LabelProjeto.Visible = False
             TextBoxProjeto.Visible = False
@@ -331,7 +341,7 @@ Public Class FormMain
             ComboBoxRespAP.Location = New Point(ComboBoxRespAP.Location.X, ComboBoxRespAP.Location.Y - yOffset)
             LabelRespAP.Location = New Point(24, LabelRespAP.Location.Y - yOffset)
             LabelRespAP.Text = "Resp.A.P.:"
-            TextBoxRespAPborder.Location = New Point(TextBoxRespAPborder.Location.X, TextBoxRespAPborder.Location.Y - yOffset)
+            'TextBoxRespAPborder.Location = New Point(TextBoxRespAPborder.Location.X, TextBoxRespAPborder.Location.Y - yOffset)
 
             LabelPastaProd.Visible = False
             TextBoxPastaProd.Visible = False
@@ -390,13 +400,15 @@ Public Class FormMain
             TextBox_n_cliente.Text = "XXXX"
             CBnomeClienteFill(ComboBox_nome_cliente)
             ComboBox_nome_cliente.Visible = True
+            TextBox_nome_cliente.Visible = False
             TextBox_n_cliente_Leave(sender, e)
         Else
             TextBox_n_cliente.Enabled = True
             SEMnCliente = False
             TextBox_n_cliente.Clear()
             TextBox_nome_cliente.Clear()
-            ComboBox_nome_cliente.visible = False
+            ComboBox_nome_cliente.Visible = False
+            TextBox_nome_cliente.Visible = True
             TextBox_nome_cliente.Enabled = False
         End If
         Call previewClean()
@@ -462,5 +474,4 @@ Public Class FormMain
     Private Sub ComboBox_nome_cliente_Leave(sender As Object, e As EventArgs) Handles ComboBox_nome_cliente.Leave
         ComboBox_nome_cliente.Text = UCase(ComboBox_nome_cliente.Text)
     End Sub
-
 End Class

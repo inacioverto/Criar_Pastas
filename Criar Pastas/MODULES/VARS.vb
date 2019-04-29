@@ -14,6 +14,7 @@ Module VARS
     Public check_textbox As Boolean = True
     Public pastaClienteProd, pastaClienteID As String
     Public TipoPasta As Integer ' 0 - projeto | 1 - análise de projeto
+    Public msg As CustomMessageBox
 
     Public nProjOK, nClienteOK, nEncOK, desProjOK, nomeClienteOK, desProjGenOK As Boolean
 

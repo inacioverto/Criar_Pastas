@@ -92,10 +92,14 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -117,6 +121,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FORMS\CustomMessageBox.designer.vb">
+      <DependentUpon>CustomMessageBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FORMS\CustomMessageBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MODULES\CONNECTION.vb" />
     <Compile Include="FORMS\DocumentSelector.Designer.vb">
       <DependentUpon>DocumentSelector.vb</DependentUpon>
@@ -130,6 +140,9 @@
     <Compile Include="FORMS\FormMain.Designer.vb">
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MODULES\FlatComboBox.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MODULES\Functions.vb" />
     <Compile Include="MODULES\FunctionsFolderCreation.vb" />
@@ -165,6 +178,9 @@
     <Compile Include="MODULES\VARS.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FORMS\CustomMessageBox.resx">
+      <DependentUpon>CustomMessageBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FORMS\DocumentSelector.resx">
       <DependentUpon>DocumentSelector.vb</DependentUpon>
     </EmbeddedResource>
