@@ -137,7 +137,8 @@ Module FunctionsFolderCreation
 
                 If Not projGenOnly Or projGen Then 'não faz nada se for verdadeiro projGenOnly e falso projGen
                     Dim fileName As String = node.Attributes("name").Value
-                    Dim origFile As String = PastaModelo & node.Attributes("path").Value
+                    Dim origFile As String = node.Attributes("path").Value
+                    replaceVars(origFile)
                     Dim ext As String = Path.GetExtension(origFile) 'Strings.Right(origFile, Len(origFile) - InStrRev(origFile, ".") + 1)
                     Dim destFile As String = currentPath + fileName
 

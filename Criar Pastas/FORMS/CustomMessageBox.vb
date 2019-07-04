@@ -1,29 +1,52 @@
 Imports System.Windows.Forms
 Imports System.Drawing
 
+
+' <DECLARATION>
+' Public msg as CustomMessageBox
+' dim answer as integer
+'</DECLARATION>
+
+' <USAGE>
+' msg = New CustomMessageBox(message, buttonNOtext, buttonYEStext, title)
+' answer = msg.ShowDialog()
+'</USAGE>
+
+' <PARAMS>
+' <Message> Message to show on form
+' <ButtonNOtext> Text for button that will return VbNo
+' <ButtonYEStext> text for button that will return VbYes - if empty the button is hidden
+' <Title> Message form title - if empty will assume the same of the MAINFORM
+' <Icon> Message form icon - if empty will assume the same of the MAINFORM
+' </PARAMS>
+
 Public Class CustomMessageBox
 
-    Public Sub New(ByVal message As String, ByVal buttonNOtext As String, Optional ByVal buttonYEStext As String = "", Optional ByVal title As String = "")
+
+
+    Public Sub New(ByVal Message As String, ByVal ButtonNOtext As String, Optional ByVal ButtonYEStext As String = "", Optional ByVal Title As String = "", Optional ByVal Icon As Drawing.Icon = Nothing)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        Label1.Text = message
-        Dim g As Graphics = Label1.CreateGraphics()
-        Label1.Width = CInt(g.MeasureString(Label1.Text, Label1.Font).Width)
-        Label1.Height = CInt(g.MeasureString(Label1.Text, Label1.Font).Height)
 
-        If title = "" Then title = FormMain.Text
-        Me.Text = title
-        Me.Icon = FormMain.Icon
-        Me.Size = New Size(Label1.Width + 40, Me.Height + Label1.Height - 13)
+        If Title = "" Then Title = FormMain.Text
+        If Title = "" Then Title = FormMain.Text
+        Me.Text = Title
+        Label1.Text = Message
+        If Icon IsNot Nothing Then
+            Me.Icon = Icon
+        Else
+            Me.Icon = FormMain.Icon
+        End If
+        Me.Size = New Size(Label1.Width + 40, Label1.Height + 110)
         Label1.Dock = DockStyle.Fill
-        NO_Button.Text = buttonNOtext
-        If buttonYEStext = "" Then
+        NO_Button.Text = ButtonNOtext
+        If ButtonYEStext = "" Then
             YES_Button.Visible = False
         Else
-            YES_Button.Text = buttonYEStext
+            YES_Button.Text = ButtonYEStext
         End If
         DialogResult = Windows.Forms.DialogResult.Cancel
     End Sub
@@ -41,3 +64,5 @@ Public Class CustomMessageBox
     End Sub
 
 End Class
+
+

@@ -284,6 +284,7 @@ Partial Class FormMain
         'CheckBoxProdutoVerto
         '
         Me.CheckBoxProdutoVerto.AutoSize = True
+        Me.CheckBoxProdutoVerto.Enabled = False
         Me.CheckBoxProdutoVerto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CheckBoxProdutoVerto.Location = New System.Drawing.Point(185, 48)
         Me.CheckBoxProdutoVerto.Name = "CheckBoxProdutoVerto"
@@ -394,7 +395,7 @@ Partial Class FormMain
         Me.ComboBox_nome_cliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox_nome_cliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ComboBox_nome_cliente.FormattingEnabled = True
-        Me.ComboBox_nome_cliente.Location = New System.Drawing.Point(129, 12)
+        Me.ComboBox_nome_cliente.Location = New System.Drawing.Point(129, 13)
         Me.ComboBox_nome_cliente.Name = "ComboBox_nome_cliente"
         Me.ComboBox_nome_cliente.Size = New System.Drawing.Size(168, 21)
         Me.ComboBox_nome_cliente.TabIndex = 1

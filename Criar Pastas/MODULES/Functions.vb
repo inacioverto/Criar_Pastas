@@ -326,6 +326,7 @@ Module Functions
 
 
     Sub replaceVars(ByRef text As String)
+        text = Replace(text, "$pastaModelo", PastaModelo)
         text = Replace(text, "$data", Now.ToString("yyyy-MM-dd"))
         text = Replace(text, "$pastaProd", PastaProd)
         If Not SEMnCliente Then

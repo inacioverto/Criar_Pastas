@@ -2,8 +2,6 @@
 Imports System.Xml
 
 
-
-
 Public Class FormMain
 
     Private Sub ComboBox_n_projeto_Leave(sender As Object, e As EventArgs) Handles ComboBox_n_projeto.Leave
@@ -258,6 +256,7 @@ Public Class FormMain
         respAP = ComboBoxRespAP.Text
     End Sub
 
+
     Private Sub FormMain_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Visible = False
         SplashScreen.Show(Me)
@@ -445,6 +444,7 @@ Public Class FormMain
         Call validateALL() 'desigProjGenValidation()
     End Sub
 
+
     Private Sub TextBoxProjGen_Leave(sender As Object, e As EventArgs) Handles TextBoxProjGen.Leave
         TextBoxProjGen.Text = UCase(TextBoxProjGen.Text)
     End Sub
@@ -455,23 +455,36 @@ Public Class FormMain
         Call validateALL()
     End Sub
 
+
     Private Sub FormMain_Click(sender As Object, e As EventArgs) Handles MyBase.Click
         Call validateALL()
     End Sub
+
 
     Private Sub PanelButtons_Click(sender As Object, e As EventArgs) Handles PanelButtons.Click
         Call validateALL()
     End Sub
 
+
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
         Call validateALL()
     End Sub
+
 
     Private Sub TextBox_desig_proj_Leave(sender As Object, e As EventArgs) Handles TextBox_desig_proj.Leave
         TextBox_desig_proj.Text = UCase(TextBox_desig_proj.Text)
     End Sub
 
+
     Private Sub ComboBox_nome_cliente_Leave(sender As Object, e As EventArgs) Handles ComboBox_nome_cliente.Leave
         ComboBox_nome_cliente.Text = UCase(ComboBox_nome_cliente.Text)
+    End Sub
+
+    Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub ComboBox_n_projeto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox_n_projeto.SelectedIndexChanged
+
     End Sub
 End Class
